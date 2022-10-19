@@ -26,20 +26,19 @@ const init = async () => {
 
     const allDepartments = async () => { 
         const results = await db.query('SELECT * FROM departments;');
-        console.table(results);
+        console.table(results[0]);
         askQ();
     }
 
     const allRoles = async () => {
         const results = await db.query('SELECT * FROM roles;');
-        console.table(results);
-        askQ();
-        
+        console.table(results[0]);
+        askQ();        
     }
 
     const allEmployees = async () => {
-        const results = await db.query('SELECT * FROM employees');
-        console.table(results);
+        const results = await db.query('SELECT * FROM employees;');
+        console.table(results[0]);
         askQ();
     }
 
@@ -80,16 +79,22 @@ const init = async () => {
                 break;
             case 'View all roles':
                 allRoles();
+                break;
             case 'View all employees':
                 allEmployees();
+                break;
             case 'Add a department':
                 addDepartment();
+                break;
             case 'Add a role':
                 addRole();
+                break;
             case 'Add an employee':
                 addEmployee();
+                break;
             case 'Update an employee role':
                 updateEmployee();
+                break;
             // case 'Exit':
                 // exit();
 
@@ -98,4 +103,5 @@ const init = async () => {
 
     askQ();
 }
+init();
     

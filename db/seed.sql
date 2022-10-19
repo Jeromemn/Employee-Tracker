@@ -1,11 +1,11 @@
 -- prepopulate database 
 
-INSERT INTO department (department_name)
+INSERT INTO departments (department_name)
 VALUES  ("Events"),
         ("Sales"),
         ("Corporate");
 
-INSERT INTO roles (title, salary, department)
+INSERT INTO roles (title, salary, departments)
 VALUES ("Valet", "30000", 1),
         ("Traffic director", "20000", 1),
         ("Golf Cart Driver", "20000", 1),
@@ -16,7 +16,7 @@ VALUES ("Valet", "30000", 1),
         ("HR", "70000", 3),
         ("Trainer", "60000", 3);
 
-INSERT INTO employee (first_name, last_name, roles,)
+INSERT INTO employees (first_name, last_name, roles)
 VALUES ("Ryan", "Jacobs", 001),
         ("Matt", "Connors", 005),
         ("KC", "Hoy", 001),
