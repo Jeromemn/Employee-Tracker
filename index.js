@@ -42,8 +42,8 @@ const init = async () => {
         askQ();
     }
 
-    const addDepartment = async (id, name) => {
-        await db.query('INSERT INTO departments (id, department_name) VALUES (?,?)', [id, name] );
+    const addDepartment = async (name) => {
+        await db.query('INSERT INTO departments (department_name) VALUES (?)', [name]);
         console.log("You have added a new department");
 
         askQ();
