@@ -2,5 +2,9 @@
   "dependencies": {
     "inquirer": "^8.2.4",
     "mysql2": "^2.3.3"
-  }
+  },
+  "scripts": {
+    "seed": "SOURCE schema.sql && SOURCE seed.sql"
+ }
+
 }

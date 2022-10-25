@@ -1,107 +1,105 @@
-const connection = require('./db/connection');
-const inquirer = require('inquirer');
+const connection = require("./db/connection");
+const inquirer = require("inquirer");
+// const questions = require('./db/prompt');
+const {
+  newDepartmentQ,
+  newRoleQ,
+  newEmployeeQ,
+} = require("./db/prompt.js");
+
+const {
+  allDepartments,
+  allRoles,
+  allEmployees,
+  editDepartment,
+  addRole,
+  addEmployee,
+  updateEmployee
+} = require("./db/query.js");
 
 const init = async () => {
-    const db = await connection;
+  const db = await connection;
 
-    const initialQuestion = [
-        {
-            name: "start",
-        
-            message: "Select a option",
-            type: "list",
-            choices: [
-                "View all departments",
-                "View all roles",
-                "View all employees",
-                "Add a department",
-                "Add a role",
-                "Add an employee",
-                "Update an employee role",
-                "Exit"
-            ]
-        }
-    ];
+  const initialQuestion = [
+    {
+      name: "start",
+
+      message: "Select a option",
+      type: "list",
+      choices: [
+        "View all departments",
+        "View all roles",
+        "View all employees",
+        "Add a department",
+        "Add a role",
+        "Add an employee",
+        "Update an employee role",
+        "Exit",
+      ],
+    },
+  ];
 
 
-    const allDepartments = async () => { 
-        const results = await db.query('SELECT * FROM departments;');
-        console.table(results[0]);
+
+  const askQ = async () => {
+    const { start } = await inquirer.prompt(initialQuestion);
+
+    switch (start) {
+      case "View all departments":
+       await allDepartments(db);
         askQ();
-    }
-
-    const allRoles = async () => {
-        const results = await db.query('SELECT * FROM roles;');
-        console.table(results[0]);
-        askQ();        
-    }
-
-    const allEmployees = async () => {
-        const results = await db.query('SELECT * FROM employees;');
-        console.table(results[0]);
+        break;
+      case "View all roles":
+        await allRoles(db);
         askQ();
-    }
-
-    const addDepartment = async (name) => {
-        await db.query('INSERT INTO departments (department_name) VALUES (?)', [name]);
-        console.log("You have added a new department");
-
+        break;
+      case "View all employees":
+        await allEmployees(db);
         askQ();
-    }
-
-    const addRole = async (title, salary, department) => {
-        await db.query('INSERT INTO roles (title, salary, department) VALUES (?,?,?,?', [title, salary, department]);
-        console.log("You have added a new role");
-
+        break;
+      case "Add a department":
+      //   const { departmentName } =
+      // await inquirer.prompt([
+      //     {
+      //       name: "departmentName",
+      //       message: "What is the name of the Department you want to add?",
+      //       type: "input"
+      //     },
+      //   ]);
+        const { departmentName } = await newDepartmentQ(db);
+        await editDepartment(db, departmentName);
         askQ();
-    }
-
-    const addEmployee = async (first, last, role, manager) => {
-        await db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ?,?,?,?', [first, last, role, manager]);
-        console.log("You have added an employee");
-
+        break;
+      case "Add a role":
+        await addRole(db);
         askQ();
-    }
-
-    const updateEmployee = async (role) => {
-        await db.query('INSERT INTO employee (role_id) VALUES ?,', [role]);
-        console.log("You have changes this employees role");
-
+        break;
+      case "Add an employee":
+        await addEmployee(db);
         askQ();
+        break;
+      case "Update an employee role":
+        await updateEmployee(db);
+        askQ();
+        break;
+      // case 'Exit':
+      // exit();
     }
+  };
 
-    const askQ = async () => {
-        const { start } = await inquirer.prompt(initialQuestion);
-
-        switch (start) {
-            case 'View all departments':
-                allDepartments();
-                break;
-            case 'View all roles':
-                allRoles();
-                break;
-            case 'View all employees':
-                allEmployees();
-                break;
-            case 'Add a department':
-                addDepartment();
-                break;
-            case 'Add a role':
-                addRole();
-                break;
-            case 'Add an employee':
-                addEmployee();
-                break;
-            case 'Update an employee role':
-                updateEmployee();
-                break;
-            // case 'Exit':
-                // exit();
-
-        }
-    }
-
-    askQ();
-}
-init();
+  // function newDepartmentQ() {
+ 
+//     {
+//       name: "removeDepartment", 
+//       message: "What department would you like to remove?",
+//       type: "list",
+//       choices: [
+          
+//       ]
+//     }
     
+//   ]);
+// }
+  askQ();
+};
+init();
