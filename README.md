@@ -26,11 +26,9 @@ This application is installed by cloning to your device
 ## Usage
 to use this application, you will go to the terminal and type node index.js to begin, from there it will run. You can toggle through the options using the arrow keys and select a option using the enter key when a topic is highlighted. To make changes you select the type of change you want and answer the prompts. This will make changes in the database. Once you are done making changes select exit and you will be exited from the application. 
 
-![image](path)
 
+[employee-tracker-vid.webm](https://user-images.githubusercontent.com/112592440/198520698-65392a9f-1e40-4f2d-af51-6925ef950dae.webm)
 
-
-[Watch Builing README](path)
     
 ## 
 
