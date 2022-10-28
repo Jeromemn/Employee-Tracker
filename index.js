@@ -2,9 +2,10 @@ const connection = require("./db/connection");
 const inquirer = require("inquirer");
 // const questions = require('./db/prompt');
 const {
-  newDepartmentQ,
+  editDepartmentQ,
   newRoleQ,
   newEmployeeQ,
+  employeeUpdater,
 } = require("./db/prompt.js");
 
 const {
@@ -66,24 +67,28 @@ const init = async () => {
       //       type: "input"
       //     },
       //   ]);
-        const { departmentName } = await newDepartmentQ(db);
+        const { departmentName } = await editDepartmentQ(db);
         await editDepartment(db, departmentName);
         askQ();
         break;
       case "Add a role":
-        await addRole(db);
+        const { title, salary, department } = await newRoleQ(db);
+        await addRole(db, title, salary, department );
         askQ();
         break;
       case "Add an employee":
-        await addEmployee(db);
+        const { first, last, role, manager } = await newEmployeeQ(db)
+        await addEmployee(db, first, last, role, manager);
         askQ();
         break;
       case "Update an employee role":
-        await updateEmployee(db);
+        const { fName, lName, roles } = await employeeUpdater(db)
+        await updateEmployee(db, fName, lName, roles);
         askQ();
         break;
-      // case 'Exit':
-      // exit();
+        case 'Exit':
+          console.log("Goodbye");
+         process.exit();
     }
   };
 
